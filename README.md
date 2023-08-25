@@ -20,7 +20,6 @@ El objetivo es generar diferentes salidas basadas en una fecha proporcionada com
 - `Transformations/`: Contiene las transformaciones de Pentaho (.ktr).
 - `Jobs/`: Contiene el job de Pentaho (.kjb).
 - `src/`: Carpeta para guardar el archivo CSV descargado.
-- `config.sh`: Archivo para editar la ruta del pdi.
 - `start.sh`: Archivo para ejecutar la aplicación Kettle.
 
 ## Uso
@@ -29,7 +28,7 @@ El objetivo es generar diferentes salidas basadas en una fecha proporcionada com
 
    ```sh
    git clone https://github.com/gonzalocandia92/NBCH-Desafio-Kettle
-2. Edita el archivo config.sh con la ruta ruta donde se encuentra instalado Pentaho
+2. Edita la variable `ruta_pdi` dentro del archivo `start.sh` con la ruta ruta donde se encuentra instalado Pentaho
 
 3. Crea una base de datos en PostgreSQL
 
