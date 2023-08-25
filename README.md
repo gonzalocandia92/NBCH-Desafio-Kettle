@@ -28,7 +28,7 @@ El objetivo es generar diferentes salidas basadas en una fecha proporcionada com
 1. Clona este repositorio en tu sistema local utilizando el siguiente comando:
 
    ```sh
-   git clone https://github.com/tu-usuario/desafio-pentaho.gitusuario
+   git clone https://github.com/gonzalocandia92/NBCH-Desafio-Kettle
 2. Edita el archivo config.sh con la ruta ruta donde se encuentra instalado Pentaho
 
 3. Crea una base de datos en PostgreSQL
