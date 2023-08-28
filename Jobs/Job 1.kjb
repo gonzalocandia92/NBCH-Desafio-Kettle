@@ -16,6 +16,11 @@
       <default_value/>
       <description/>
     </parameter>
+    <parameter>
+      <name>repo_path</name>
+      <default_value/>
+      <description/>
+    </parameter>
   </parameters>
   <connection>
     <name>conn_postgres_localhost</name>
@@ -465,6 +470,11 @@ CREATE INDEX IF NOT EXISTS idx_dim_artist_tk ON dwh_desafio.dim_artist(id_artist
         <field>
           <variable_name>param_date</variable_name>
           <variable_value>${param_date}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>repo_path</variable_name>
+          <variable_value>${repo_path}</variable_value>
           <variable_type>JVM</variable_type>
         </field>
       </fields>

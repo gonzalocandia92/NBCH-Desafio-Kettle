@@ -6,8 +6,19 @@
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
+      <parameter>
+        <name>param_date</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>repo_path</name>
+        <default_value/>
+        <description/>
+      </parameter>
     </parameters>
     <log>
       <trans-log-table>
@@ -577,6 +588,11 @@
       <to>order name</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>periodo</from>
+      <to>Dummy.2</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
     <name>CSV file input</name>
@@ -589,7 +605,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>/home/gonza/Documentos/NBCH/DesafioKettle/src/artist_credit.csv</filename>
+    <filename>${repo_path}/src/artist_credit.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -671,62 +687,6 @@
     <GUI>
       <xloc>48</xloc>
       <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Years</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <failIfNoFile>Y</failIfNoFile>
-    <calculation>
-      <field_name>periodo</field_name>
-      <calc_type>YEAR_OF_DATE</calc_type>
-      <field_a>param_date</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>YEAR_date</field_name>
-      <calc_type>YEAR_OF_DATE</calc_type>
-      <field_a>created</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>448</xloc>
-      <yloc>448</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -842,6 +802,60 @@
     </GUI>
   </step>
   <step>
+    <name>DB lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>conn_postgres_localhost</connection>
+    <cache>N</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>dwh_desafio</schema>
+      <table>dim_artist</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>id_artits</name>
+        <field>cod_artist</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>name</name>
+        <field>name</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id_artist</name>
+        <rename>changeable</rename>
+        <default>-1</default>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>720</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Dummy</name>
     <type>Dummy</type>
     <description/>
@@ -929,7 +943,7 @@
     <appendLines>N</appendLines>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>/home/gonza/Documentos/NBCH/DesafioKettle/src/artist</name>
+      <name>${repo_path}/src/artist</name>
       <extention>xlsx</extention>
       <do_not_open_newfile_init>Y</do_not_open_newfile_init>
       <split>N</split>
@@ -1093,6 +1107,62 @@
     </GUI>
   </step>
   <step>
+    <name>Years</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <failIfNoFile>Y</failIfNoFile>
+    <calculation>
+      <field_name>periodo</field_name>
+      <calc_type>YEAR_OF_DATE</calc_type>
+      <field_a>param_date</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>String</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <calculation>
+      <field_name>YEAR_date</field_name>
+      <calc_type>YEAR_OF_DATE</calc_type>
+      <field_a>created</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>csv output</name>
     <type>TextFileOutput</type>
     <description/>
@@ -1117,7 +1187,7 @@
     <fileNameField>id_artits</fileNameField>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>/home/gonza/Documentos/NBCH/DesafioKettle/src/artist</name>
+      <name>${repo_path}/src/artist</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>Y</do_not_open_new_file_init>
       <extention>csv</extention>
@@ -1539,7 +1609,7 @@
       <schema_name/>
     </partitioning>
     <send_true_to>Concat fields</send_true_to>
-    <send_false_to/>
+    <send_false_to>Dummy.2</send_false_to>
     <compare>
       <condition>
         <negated>N</negated>
@@ -1604,8 +1674,8 @@
     </GUI>
   </step>
   <step>
-    <name>DB lookup</name>
-    <type>DBLookup</type>
+    <name>Dummy.2</name>
+    <type>Dummy</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1614,35 +1684,6 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>conn_postgres_localhost</connection>
-    <cache>N</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>dwh_desafio</schema>
-      <table>dim_artist</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>id_artits</name>
-        <field>cod_artist</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>name</name>
-        <field>name</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id_artist</name>
-        <rename>changeable</rename>
-        <default>-1</default>
-        <type>Integer</type>
-      </value>
-    </lookup>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1653,7 +1694,7 @@
     </remotesteps>
     <GUI>
       <xloc>720</xloc>
-      <yloc>160</yloc>
+      <yloc>544</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

@@ -19,7 +19,7 @@ El objetivo es generar diferentes salidas basadas en una fecha proporcionada com
 
 - `Transformations/`: Contiene las transformaciones de Pentaho (.ktr).
 - `Jobs/`: Contiene el job de Pentaho (.kjb).
-- `src/`: Carpeta para guardar el archivo CSV descargado.
+- `src/`: Carpeta para guardar el archivo CSV descargado y donde se exportarán los archivos excel y csv.
 - `start.sh`: Archivo para ejecutar la aplicación Kettle.
 
 ## Uso
@@ -30,15 +30,15 @@ El objetivo es generar diferentes salidas basadas en una fecha proporcionada com
    git clone https://github.com/gonzalocandia92/NBCH-Desafio-Kettle
 2. Edita la variable `ruta_pdi` dentro del archivo `start.sh` con la ruta ruta donde se encuentra instalado Pentaho
 
-3. Crea una base de datos en PostgreSQL
+3. Crea una base de datos en PostgreSQL, en este caso se utilizó el nombre `desafio-kettle`.
 
-4. Dentro de pentaho:
-    - Edita la conexión a la base de datos en PostgreSQL
-    - Edita las rutas donde se exportarán los archivos .xls y .csv
-    - Edita la ruta desde donde leerá el archivo artist_credit.csv
-
+4. Dentro de pentaho edita la conexión a la base de datos en PostgreSQL
 
 5. Ejecuta el archivo start.sh.
+
+6. Ingresa una fecha (YYYY-MM-DD), luego una hora (HH:MM:SS) para generar la fecha completa que servirá para el proceso de ETL.
+
+
 
 ---
 Creado por [Gonzalo Ismael Candia Gonzalez](https://github.com/gonzalocandia92)
